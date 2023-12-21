@@ -27,4 +27,5 @@ export type User = {
   address: UserAddress;
 
   orders: UserOrder[];
+  isDeleted: boolean;
 };

@@ -40,6 +40,10 @@ const userSchema = new Schema<User>({
   hobbies: { type: [String], required: true },
   address: userAddressSchema,
   orders: { type: [userOrderSchema], required: false },
+  isDeleted: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 //pre save middleware
@@ -48,6 +52,15 @@ userSchema.pre("save", function () {
 });
 userSchema.post("save", function (doc, next) {
   //   console.log(this, "save");
+  next();
+});
+
+userSchema.pre("find", function (next) {
+  this.find({ isDeleted: { $ne: true } });
+  next();
+});
+userSchema.pre("findOne", function (next) {
+  this.find({ isDeleted: { $ne: true } });
   next();
 });
 export const UserModel = model<User>("User", userSchema);
