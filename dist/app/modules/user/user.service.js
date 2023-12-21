@@ -23,8 +23,18 @@ const getSingleUserFromDB = (userId) => __awaiter(void 0, void 0, void 0, functi
     const result = yield user_model_1.UserModel.findOne({ userId });
     return result;
 });
+const getUpdatedUserFromDB = (userId, age) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield user_model_1.UserModel.findOneAndUpdate({ userId }, { new: true });
+    return result;
+});
+const deleteUserFromDB = (userId) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield user_model_1.UserModel.updateOne({ userId }, { isDeleted: true });
+    return result;
+});
 exports.userServices = {
     createUserIntoDB,
     getAllUserFromDB,
     getSingleUserFromDB,
+    getUpdatedUserFromDB,
+    deleteUserFromDB,
 };

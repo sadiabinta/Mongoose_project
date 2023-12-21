@@ -41,5 +41,25 @@ const userSchema = new mongoose_1.Schema({
     hobbies: { type: [String], required: true },
     address: userAddressSchema,
     orders: { type: [userOrderSchema], required: false },
+    isDeleted: {
+        type: Boolean,
+        default: false,
+    },
+});
+//pre save middleware
+userSchema.pre("save", function () {
+    console.log(this, "will save");
+});
+userSchema.post("save", function (doc, next) {
+    //   console.log(this, "save");
+    next();
+});
+userSchema.pre("find", function (next) {
+    this.find({ isDeleted: { $ne: true } });
+    next();
+});
+userSchema.pre("findOne", function (next) {
+    this.find({ isDeleted: { $ne: true } });
+    next();
 });
 exports.UserModel = (0, mongoose_1.model)("User", userSchema);

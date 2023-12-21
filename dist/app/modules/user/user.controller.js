@@ -49,6 +49,49 @@ const getSingleUser = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         });
     }
     catch (err) {
+        res.status(404).json({
+            success: false,
+            message: "User not found",
+            error: {
+                code: 404,
+                description: "User not found!",
+            },
+        });
+    }
+});
+const deleteUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const userId = parseInt(req.params.userId, 10);
+        const result = yield user_service_1.userServices.deleteUserFromDB(userId);
+        res.status(200).json({
+            success: true,
+            message: "User deleted successfully!",
+            data: result,
+        });
+    }
+    catch (err) {
+        res.status(404).json({
+            success: false,
+            message: "User not found",
+            error: {
+                code: 404,
+                description: "User not found!",
+            },
+        });
+    }
+});
+const getUpdatedUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const userId = parseInt(req.params.userId, 10);
+        const userDataToUpdate = req.body.age;
+        const result = yield user_service_1.userServices.getUpdatedUserFromDB(userId, userDataToUpdate);
+        res.status(200).json({
+            success: true,
+            message: "Users fetched successfully!",
+            data: result,
+        });
+    }
+    catch (err) {
         console.log(err);
     }
 });
@@ -56,4 +99,6 @@ exports.UserControllers = {
     createUser,
     getAllUsers,
     getSingleUser,
+    deleteUser,
+    getUpdatedUser,
 };

@@ -15,7 +15,7 @@ const getSingleUserFromDB = async (userId: number) => {
   return result;
 };
 const getUpdatedUserFromDB = async (userId: number, age: number) => {
-  const result = await UserModel.findOneAndUpdate({ userId }, { new: true });
+  const result = await UserModel.findOneAndUpdate({ userId }, { age: age });
   return result;
 };
 const deleteUserFromDB = async (userId: number) => {

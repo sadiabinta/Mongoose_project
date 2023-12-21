@@ -82,7 +82,7 @@ const getUpdatedUser = async (req: Request, res: Response) => {
 
     res.status(200).json({
       success: true,
-      message: "Users fetched successfully!",
+      message: "Users updated successfully!",
       data: result,
     });
   } catch (err: any) {
