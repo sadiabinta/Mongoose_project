@@ -38,13 +38,39 @@ const getSingleUser = async (req: Request, res: Response) => {
       message: "Users fetched successfully!",
       data: result,
     });
-  } catch (err) {
-    console.log(err);
+  } catch (err: any) {
+    res.status(404).json({
+      success: false,
+      message: "User not found",
+      error: {
+        code: 404,
+        description: "User not found!",
+      },
+    });
   }
 };
 
+const getUpdatedUser = async (req: Request, res: Response) => {
+  try {
+    const userId = parseInt(req.params.userId, 10);
+    const userDataToUpdate = req.body.age;
+    const result = await userServices.getUpdatedUserFromDB(
+      userId,
+      userDataToUpdate
+    );
+
+    res.status(200).json({
+      success: true,
+      message: "Users fetched successfully!",
+      data: result,
+    });
+  } catch (err: any) {
+    console.log(err);
+  }
+};
 export const UserControllers = {
   createUser,
   getAllUsers,
   getSingleUser,
+  getUpdatedUser,
 };

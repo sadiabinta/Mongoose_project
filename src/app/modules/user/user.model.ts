@@ -42,4 +42,12 @@ const userSchema = new Schema<User>({
   orders: { type: [userOrderSchema], required: false },
 });
 
+//pre save middleware
+userSchema.pre("save", function () {
+  console.log(this, "will save");
+});
+userSchema.post("save", function (doc, next) {
+  //   console.log(this, "save");
+  next();
+});
 export const UserModel = model<User>("User", userSchema);
